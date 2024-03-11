@@ -1,0 +1,6 @@
+{
+  "name": "marketing_dataform_demo",
+  "dependencies": {
+    "@dataform/core": "2.8.3"
+  }
+}
