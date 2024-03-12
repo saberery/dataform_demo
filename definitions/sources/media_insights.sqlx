@@ -1,0 +1,6 @@
+config {
+    type: "declaration",
+    schema: "Instagram_demo_data",
+    database: "pg-jp-n-app-181481",
+    name: "MEDIA_INSIGHTS"
+}

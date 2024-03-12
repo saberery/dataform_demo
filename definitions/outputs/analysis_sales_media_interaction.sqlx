@@ -1,0 +1,58 @@
+config {
+    type: "table", // Creates a view in BigQuery. Try changing to "table" instead.
+    tags: ["mart", "weekly"],
+    name: "ANALYSIS_SALES_MEDIA_INTERACTION",
+    schema: "Mart_demo_data",
+    dependencies: ["DEPART_DAILY_REV_FORMATTED", "MEDIA_HISTORY_FORMATTED", "MEDIA_INSIGHTS"],
+    columns: {
+        TOUROKUKBN: "TOUROKUKBN", // Column descriptions are pushed to BigQuery.
+        TENPOCD: "TENPOCD",
+        JIGYOUBUCD: "JIGYOUBUCD",
+        HANBAIBUCD: "HANBAIBUCD",
+        UNITCD: "UNITCD",
+        CELLCD: "CELLCD",
+        URIAGEHANBAIBASHO: "URIAGEHANBAIBASHO",
+        SalesDate: "SalesDate",
+        Rev: "Rev",
+        caption: "caption",
+        media_type: "media_type",
+        like_count: "like_count",
+        comment_count: "comment_count",
+        video_views: "video_views",
+        carousel_album_engagement: "carousel_album_engagement",
+        carousel_album_impressions: "carousel_album_impressions"
+    }
+}
+
+  -- This is an example SQLX file to help you learn the basics of Dataform.
+  -- Visit https://cloud.google.com/dataform/docs/sql-workflows for more information on how to configure your SQL workflow.
+  -- You can delete this file, then commit and push your changes to your repository when you are ready.
+  -- Config blocks allow you to configure, document, and test your data assets.
+  -- The rest of a SQLX file contains your SELECT statement used to create the table.
+SELECT
+  DR.TOUROKUKBN,
+  DR.TENPOCD,
+  DR.JIGYOUBUCD,
+  DR.HANBAIBUCD,
+  DR.UNITCD,
+  DR.CELLCD,
+  DR.URIAGEHANBAIBASHO,
+  DR.SalesDate,
+  DR.Rev,
+  MH.caption,
+  MH.media_type,
+  MI.like_count,
+  MI.comment_count,
+  MI.video_views,
+  MI.carousel_album_engagement,
+  MI.carousel_album_impressions
+FROM
+  Warehouse_zone.DEPART_DAILY_REV_FORMATTED DR
+JOIN
+  Warehouse_zone.MEDIA_HISTORY_FORMATTED MH
+ON
+  DR.SalesDate = MH.post_date
+JOIN
+  Instagram_demo_data.MEDIA_INSIGHTS MI
+ON
+  MH.id = MI.id

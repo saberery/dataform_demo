@@ -1,0 +1,28 @@
+config {
+    type: "table", // Creates a view in BigQuery. Try changing to "table" instead.
+    tags: ["cruated", "daily"],
+    schema: "Warehouse_zone",
+    name: "MEDIA_HISTORY_FORMATTED",
+}
+
+  -- Use the ref() function to manage dependencies.
+  -- Learn more about ref() and other built in functions here: https://cloud.google.com/dataform/docs/dataform-core
+SELECT
+  _fivetran_id,
+  user_id,
+  carousel_album_id,
+  caption,
+  SAFE_CAST(created_time AS DATE) AS post_date,
+  id,
+  ig_id,
+  is_comment_enabled,
+  is_story,
+  media_type,
+  media_url,
+  media_product_type,
+  permalink,
+  shortcode,
+  thumbnail_url,
+  username
+FROM
+  ${ref("MEDIA_HISTORY")}

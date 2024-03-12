@@ -1,0 +1,6 @@
+config {
+    type: "declaration",
+    schema: "Depart_revenue_demo_data",
+    database: "pg-jp-n-app-181481",
+    name: "DEPART_DAILY_REV"
+}

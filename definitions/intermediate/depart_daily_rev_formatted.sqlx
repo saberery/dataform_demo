@@ -1,0 +1,21 @@
+config {
+    type: "table", // Creates a view in BigQuery. Try changing to "table" instead.
+    tags: ["cruated", "daily"],
+    schema: "Warehouse_zone",
+    name: "DEPART_DAILY_REV_FORMATTED",
+}
+
+  -- Use the ref() function to manage dependencies.
+  -- Learn more about ref() and other built in functions here: https://cloud.google.com/dataform/docs/dataform-core
+SELECT
+  TOUROKUKBN,
+  TENPOCD,
+  JIGYOUBUCD,
+  HANBAIBUCD,
+  UNITCD,
+  CELLCD,
+  URIAGEHANBAIBASHO,
+  SAFE_CAST(CONCAT(DR.KEIJOUYR, '-', DR.KEIJOUMT, '-', DR.KEIJOUDT) AS DATE) AS SalesDate,
+  Rev
+FROM
+  ${ref("DEPART_DAILY_REV")} AS DR
