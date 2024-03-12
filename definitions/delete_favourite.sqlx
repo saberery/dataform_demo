@@ -1,0 +1,16 @@
+config {
+    type: "operations",
+    tags: ["favourite"],
+    dependencies: ["source"]
+}
+
+DELETE
+FROM
+  dataform.source
+WHERE
+  fruit = 'oranges';
+DELETE
+FROM
+  dataform.source
+WHERE
+  fruit = 'apples';
