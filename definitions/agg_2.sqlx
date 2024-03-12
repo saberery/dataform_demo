@@ -1,0 +1,9 @@
+config {
+    type: "table",
+    description: "This table calculates COUNT from the source view",
+}
+
+SELECT
+  COUNT(number) AS number_count
+FROM
+  ${ref("source_view")}
