@@ -1,8 +1,7 @@
 {
-  "defaultSchema": "dataform",
+  "defaultSchema": "dataform_exercise",
   "assertionSchema": "dataform_assertions",
   "warehouse": "bigquery",
   "defaultDatabase": "pg-jp-n-app-181481",
   "defaultLocation": "asia-northeast1"
 }
-    
