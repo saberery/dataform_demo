@@ -1,0 +1,11 @@
+config {
+    type: "table",
+    description: "Description of the aggregation table"
+}
+
+-- SQLの順番が決めた
+
+SELECT
+  SUM(number) AS total
+FROM
+  ${ref("source_table")}  
