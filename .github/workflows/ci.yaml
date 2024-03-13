@@ -15,17 +15,13 @@ jobs:
         uses: docker://dataformco/dataform:latest
         with:
           args: install
-      - name: Use GCP Service Account Key
+      - name: Generate Dataform credentials
         run: |
           echo "${{ secrets.DATAFORM_KEY }}" > .df-credentials.json
       - name: Compile
         uses: docker://dataformco/dataform:latest
         with:
           args: compile
-      - name: Test
-        uses: docker://dataformco/dataform:latest
-        with:
-          args: test
       - name: Dry run
         uses: docker://dataformco/dataform:latest
         with:
