@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  compile-test-dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code into workspace directory
+        uses: actions/checkout@v4
+      - name: Install project dependencies
+        uses: docker://dataformco/dataform:latest
+        with:
+          args: install
+      - name: Use GCP Service Account Key
+        run: |
+          echo "${{ secrets.GCP_KEY_BASE64 }}" | base64 -d > temp-sa.json
+      - name: Authenticate with gcloud using temp-sa.json
+        run: |
+          gcloud auth activate-service-account --key-file=temp-sa.json
+      - name: Compile
+        uses: docker://dataformco/dataform:latest
+        with:
+          args: compile
+      - name: Test
+        uses: docker://dataformco/dataform:latest
+        with:
+          args: test
+      - name: Dry run
+        uses: docker://dataformco/dataform:latest
+        with:
+          args: run --dry-run
