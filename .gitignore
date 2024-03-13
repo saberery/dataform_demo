@@ -1,1 +1,3 @@
 node_modules/
+bq-secret.json
+.df-credentials.json
