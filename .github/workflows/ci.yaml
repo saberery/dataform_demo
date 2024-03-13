@@ -17,7 +17,7 @@ jobs:
           args: install
       - name: Use GCP Service Account Key
         run: |
-          echo "${{ secrets.GCP_KEY_BASE64 }}" | base64 -d > temp-sa.json
+          echo "${{ secrets.GCP_KEY }}" > temp-sa.json
       - name: Authenticate with gcloud using temp-sa.json
         run: |
           gcloud auth activate-service-account --key-file=temp-sa.json
