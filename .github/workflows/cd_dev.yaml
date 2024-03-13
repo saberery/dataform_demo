@@ -1,0 +1,11 @@
+name: CD for dev
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-dataform:
+    uses: ./.github/workflows/cd_base.yaml
+    with:
+      environment: dev
+    secrets: inherit

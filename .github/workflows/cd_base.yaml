@@ -1,0 +1,33 @@
+name: CD
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  run-dataform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code into workspace directory
+        uses: actions/checkout@v2
+      - name: Install project dependencies
+        uses: docker://dataformco/dataform:latest
+        with:
+          args: install
+      - name: Decrypt dataform credentials
+        run: gpg --quiet --batch --yes --decrypt --passphrase="$CREDENTIALS_GPG_PASSPHRASE" --output .df-credentials.json .df-credentials.json.gpg
+        env:
+          CREDENTIALS_GPG_PASSPHRASE: ${{ secrets.CREDENTIALS_GPG_PASSPHRASE }}
+      - name: Dataform run full-refresh
+        if: contains(github.event.head_commit.message,'refresh/')
+        uses: docker://dataformco/dataform:latest
+        with:
+          args: run --run-tests  --full-refresh --schema-suffix=${{ inputs.environment }}
+      - name: Dataform run
+        if: ${{!contains(github.event.head_commit.message,'refresh/')}}
+        uses: docker://dataformco/dataform:latest
+        with:
+          args: run --run-tests --schema-suffix=${{ inputs.environment }}
