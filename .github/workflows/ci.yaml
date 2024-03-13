@@ -15,9 +15,10 @@ jobs:
         uses: docker://dataformco/dataform:latest
         with:
           args: install
-      - name: Generate Dataform credentials
-        run: |
-          echo "${{ secrets.DATAFORM_KEY }}" > .df-credentials.json
+      - name: Decrypt credentials for dataform
+        run: gpg --quiet --batch --yes --decrypt --passphrase="$CREDENTIALS_GPG_PASSPHRASE" --output .df-credentials.json .df-credentials.json.gpg
+        env:
+          CREDENTIALS_GPG_PASSPHRASE: ${{ secrets.CREDENTIALS_GPG_PASSPHRASE }}
       - name: Compile
         uses: docker://dataformco/dataform:latest
         with:
