@@ -8,11 +8,11 @@ SELECT
 FROM
   ${ref("DEPART_DAILY_REV_FORMATTED")}
 WHERE
-  SalesDate < CURRENT_DATE
+  SalesDate > CURRENT_DATE
 UNION ALL
 SELECT
   post_date
 FROM
   ${ref("MEDIA_HISTORY_FORMATTED")}
 WHERE
-  post_date < CURRENT_DATE
+  post_date > CURRENT_DATE

@@ -13,21 +13,28 @@ jobs:
     steps:
       - name: Checkout code into workspace directory
         uses: actions/checkout@v2
+      
+      - name: Setup environment variable
+        run: echo "ENVIRONMENT=${{ inputs.environment }}" >> $GITHUB_ENV
+      
       - name: Install project dependencies
         uses: docker://dataformco/dataform:latest
         with:
           args: install
+      
       - name: Decrypt dataform credentials
         run: gpg --quiet --batch --yes --decrypt --passphrase="$CREDENTIALS_GPG_PASSPHRASE" --output .df-credentials.json .df-credentials.json.gpg
         env:
           CREDENTIALS_GPG_PASSPHRASE: ${{ secrets.CREDENTIALS_GPG_PASSPHRASE }}
+      
       - name: Dataform run full-refresh
-        if: contains(github.event.head_commit.message,'refresh/')
+        if: contains(github.event.head_commit.message, 'refresh/')
         uses: docker://dataformco/dataform:latest
         with:
-          args: run --run-tests  --full-refresh --schema-suffix=${{ inputs.environment }}
+          args: run --full-refresh
+      
       - name: Dataform run
-        if: ${{!contains(github.event.head_commit.message,'refresh/')}}
+        if: ${{ !contains(github.event.head_commit.message, 'refresh/') }}
         uses: docker://dataformco/dataform:latest
         with:
-          args: run --run-tests --schema-suffix=${{ inputs.environment }}
+          args: run
