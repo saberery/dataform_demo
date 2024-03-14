@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code into workspace directory
-        uses: actions/checkout@v2
-      
-      - name: Setup environment variable
-        run: echo "ENVIRONMENT=${{ inputs.environment }}" >> $GITHUB_ENV
-      
+        uses: actions/checkout@v4
+
+      - name: Setup Dataform configuration
+        run: ./setup_dataform_config.sh ${{ inputs.environment }}
+
       - name: Install project dependencies
         uses: docker://dataformco/dataform:latest
         with:

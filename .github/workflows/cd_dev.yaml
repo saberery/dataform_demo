@@ -7,7 +7,6 @@ on:
 
 jobs:
   run-dataform:
-    if: ${{!contains(github.event.head_commit.message,'nodeploy/')}}
     uses: ./.github/workflows/cd_base.yaml
     with:
       environment: dev
