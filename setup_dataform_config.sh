@@ -6,7 +6,7 @@ if [ "$ENVIRONMENT" = "dev" ]; then
   DEFAULT_DATABASE="pg-jp-n-app-181481"
   DEFAULT_LOCATION="asia-northeast1"
 else
-  DEFAULT_DATABASE="pg-jp-n-app-637776"
+  DEFAULT_DATABASE="pg-jp-n-app-181481"
   DEFAULT_LOCATION="asia-northeast1"
 fi
 
