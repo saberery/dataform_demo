@@ -1,0 +1,18 @@
+config {
+    type: "assertion",
+    name: "assert_no_future_dates"
+}
+
+SELECT
+  SalesDate
+FROM
+  ${ref("DEPART_DAILY_REV_FORMATTED")}
+WHERE
+  SalesDate < CURRENT_DATE
+UNION ALL
+SELECT
+  post_date
+FROM
+  ${ref("MEDIA_HISTORY_FORMATTED")}
+WHERE
+  post_date < CURRENT_DATE

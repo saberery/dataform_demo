@@ -3,24 +3,27 @@ config {
     tags: ["mart", "weekly"],
     name: "ANALYSIS_SALES_MEDIA_INTERACTION",
     schema: "Mart_demo_data",
-    dependencies: ["DEPART_DAILY_REV_FORMATTED", "MEDIA_HISTORY_FORMATTED", "MEDIA_INSIGHTS"],
+    dependencies: ["assert_no_future_dates","DEPART_DAILY_REV_FORMATTED", "MEDIA_HISTORY_FORMATTED", "MEDIA_INSIGHTS"],
+    assertions: {
+        nonNull: ["Rev", "URIAGEHANBAIBASHO"]
+    },
     columns: {
-        TOUROKUKBN: "TOUROKUKBN", // Column descriptions are pushed to BigQuery.
-        TENPOCD: "TENPOCD",
-        JIGYOUBUCD: "JIGYOUBUCD",
-        HANBAIBUCD: "HANBAIBUCD",
-        UNITCD: "UNITCD",
-        CELLCD: "CELLCD",
-        URIAGEHANBAIBASHO: "URIAGEHANBAIBASHO",
-        SalesDate: "SalesDate",
-        Rev: "Rev",
-        caption: "caption",
-        media_type: "media_type",
-        like_count: "like_count",
-        comment_count: "comment_count",
-        video_views: "video_views",
-        carousel_album_engagement: "carousel_album_engagement",
-        carousel_album_impressions: "carousel_album_impressions"
+        TOUROKUKBN: "登録区分", // Column descriptions are pushed to BigQuery.
+        TENPOCD: "店舗コード",
+        JIGYOUBUCD: "事業部コード",
+        HANBAIBUCD: "販売部コード",
+        UNITCD: "ユニットコード",
+        CELLCD: "セルコード",
+        URIAGEHANBAIBASHO: "売上販売場所",
+        SalesDate: "計上年月日",
+        Rev: "売上",
+        caption: "メディアのタイトルや説明",
+        media_type: "メディアタイプ: CAROUSEL_ALBUM、IMAGE、またはVIDEO",
+        like_count: "メディアに対する「いいね！」の数。コメントに対する返信も含まれます。アルバムの子メディアへの「いいね！」と、メディアから作成された宣伝投稿への「いいね！」を除きます",
+        comment_count: "メディアに付けられたコメントの数。アルバムの子メディアとメディアのキャプションに付けられたコメントを除きます。コメントへの返信を含みます",
+        video_views: "動画IGメディアが閲覧された合計回数。アルバムIGメディアの場合、アルバム内のすべての動画が閲覧された回数",
+        carousel_album_engagement: "アルバムIGメディアオブジェクトに付けられた「いいね！」とIGコメントの合計数",
+        carousel_album_impressions: "アルバムIGメディアオブジェクトが閲覧された合計回数"
     }
 }
 
