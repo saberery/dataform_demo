@@ -1,0 +1,31 @@
+config {
+  type: "test",
+  dataset: "DEPART_DAILY_REV_FORMATTED",
+}
+
+-- use input to mock some test data for production.reputation_data table used by the view:
+input "DEPART_DAILY_REV" {
+    SELECT
+        9 as TOUROKUKBN,
+        50 as TENPOCD,
+        90 as JIGYOUBUCD,
+        78 as HANBAIBUCD,
+        153 as UNITCD,
+        3320061549 as CELLCD,
+        61 as URIAGEHANBAIBASHO,
+        2023 as KEIJOUYR,
+        09 as KEIJOUMT,
+        12 as KEIJOUDT,
+        1222 as Rev
+}
+
+SELECT
+    9 as TOUROKUKBN,
+    50 as TENPOCD,
+    90 as JIGYOUBUCD,
+    78 as HANBAIBUCD,
+    153 as UNITCD,
+    3320061549 as CELLCD,
+    61 as URIAGEHANBAIBASHO,
+    DATE('2023-09-12') as SalesDate,
+    1222 as Rev
